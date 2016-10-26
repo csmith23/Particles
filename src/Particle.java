@@ -9,7 +9,7 @@ class Particle {
   double vel_x, vel_y;
   double accel_x, accel_y;
   
-  HashMap<int, double> charges;  // for electric, weak, strong, mass, and others
+  HashMap<String, double> charges;  // for electric, weak, strong, mass, and others
   
   public Particle(double pos_x, double pos_y, double vel_x, double vel_y) {
     this.pos_x = pos_x;
