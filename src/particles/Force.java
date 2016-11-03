@@ -7,5 +7,7 @@ package particles;
 public interface Force {
   public void calculateForce(Particle[] particles);
   public void applyForce(Particle particle);
-  public void getRadius(Particle particle);
+  
+  public int getRadius(Particle particle);
+  public int getColor();
 }
