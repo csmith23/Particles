@@ -42,6 +42,10 @@ public class NGForce implements particles.Force {
   }
 
   public int getRadius(Particle particle) {
-
+    return Math.sqrt(particle.charges["mass"]) + 5;
+  }
+  
+  public int getColor() {
+    return 255 << 16 | 255 << 8 | 255;
   }
 }
