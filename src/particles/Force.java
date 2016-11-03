@@ -4,7 +4,8 @@
 
 package particles;
 
-interface Force {
-  void calculateForce(Particle[] particles);
-  void applyForce(Particle particle);
+public interface Force {
+  public void calculateForce(Particle[] particles);
+  public void applyForce(Particle particle);
+  public void getRadius(Particle particle);
 }

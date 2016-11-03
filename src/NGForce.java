@@ -7,15 +7,15 @@
 import java.lang.*
 import particles.*
 
-class NGForce implements particles.Force {
+public class NGForce implements particles.Force {
   //                  1    2    3    4    5    6    7    8    9   10   11
-  doube G = 6.674 / (10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10)
+  private doube G = 6.674 / (10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10 * 10)
 
-  double center_x, center_y;
-  double mass;
-  int number_particles;
+  private double center_x, center_y;
+  private double mass;
+  private int number_particles;
 
-  calculateForce(Particle[] particles) {
+  public calculateForce(Particle[] particles) {
     for(int i = 0; i < particles.length; i++) {
       center_x += particles[i].getPos_x();
       center_y += particles[i].getPos_y();
@@ -26,7 +26,7 @@ class NGForce implements particles.Force {
 
     number_particles = particles.length;
   }
-  ApplyForce(Particle particle) {
+  public ApplyForce(Particle particle) {
     double mass = this.mass - particle.charges["mass"];
     double center_x -= this.center_x / number_particles;
     double center_y -= this.center_y / number_particles;
@@ -39,5 +39,9 @@ class NGForce implements particles.Force {
     double force_x = (G * particle.mass * mass) / (distance_X * distance_x)
 
     particle.applyForce(force_x, force_y);
+  }
+
+  public int getRadius(Particle particle) {
+
   }
 }
