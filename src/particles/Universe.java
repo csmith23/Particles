@@ -15,6 +15,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
+
 private class ImageComponent extends JComponent{
     private static final long serialVersionUID = 1L;
     private Image image;
@@ -38,14 +41,15 @@ public class Universe extends JFrame{
   private Particle[] particles;
 
   private int width, height;
+  private ImageComponent image_component;
 
   public Universe(int width, int height) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
     setTitle("Universe");
     setSize(width, height);
-    ImageComponent component = new ImageComponent(width, height);
-    add(component);
+    image_component = new ImageComponent(width, height);
+    add(image_component);
     this.width = width;
     this.height = height;
   }
@@ -73,15 +77,34 @@ public class Universe extends JFrame{
 
   }
   private void update() {
-    int[][] raster = new int[width][height];
+    int[] raster = new int[width*height];
     for(int k = 0; k < forces.length; k++) {
       for(int i = 0; i < particles.length; i++) {
         Particle particle = particles[i];
         int x = particles[i].getPos_x();
         int y = particles[i].getPos_y();
         int radius = forces[k].getRadius(particle);
+        int color = forces[k].getColor();
+        for(int i = x - radius; i < x + radius + 1; i ++) {
+          for(int j = y - radius; i < y + radius + 1; j ++) {
+            if(i == x || j == y) {
+              raster[i][j] += color | (255 << 16 | 255 << 8 | 255);
+            } else {
+              int value = func((double)(i - x + radius) / (2 * radius, (double)(j - y + radius) / (2 * radius));
+              raster[j*width + i] += color | value;
+            }
+          }
+        }
       }
     }
+    WritableRaster image_raster = image_component.image.getRaster();
+    image_raster.setPixels(0, 0, width, height, raster);
+  }
+  private int func(double x, double y) {
+    x *= 2; x -= 1;
+    y *= 2; y -= 1;
+    value = (x * Math.log(x) - x + 1) * (y * Math.log(y) - y + 1);
+    return (int)(value * 255) << 16 | (int)(value * 255) << 8 | (int)(value * 255);
   }
 }
 
