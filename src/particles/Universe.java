@@ -80,18 +80,17 @@ public class Universe extends JFrame{
     int[] raster = new int[width*height];
     for(int k = 0; k < forces.length; k++) {
       for(int i = 0; i < particles.length; i++) {
-        Particle particle = particles[i];
         int x = particles[i].getPos_x();
         int y = particles[i].getPos_y();
-        int radius = forces[k].getRadius(particle);
+        int radius = forces[k].getRadius(particles[i]);
         int color = forces[k].getColor();
         for(int i = x - radius; i < x + radius + 1; i ++) {
           for(int j = y - radius; i < y + radius + 1; j ++) {
             if(i == x || j == y) {
-              raster[i][j] += color | (255 << 16 | 255 << 8 | 255);
+              raster[j*width+i] += color | (255 << 16 | 255 << 8 | 255);
             } else {
               int value = func((double)(i - x + radius) / (2 * radius, (double)(j - y + radius) / (2 * radius));
-              raster[j*width + i] += color | value;
+              raster[j*width+i] += color | value;
             }
           }
         }
@@ -107,71 +106,3 @@ public class Universe extends JFrame{
     return (int)(value * 255) << 16 | (int)(value * 255) << 8 | (int)(value * 255);
   }
 }
-
-
-
-//
-//
-//
-//
-// public class ImageTest {
-//     public static void main(String[] args){
-//         EventQueue.invokeLater(new Runnable()
-//         {
-//             public void run(){
-//                 ImageFrame frame = new ImageFrame();
-//                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//                 frame.setVisible(true);
-//
-//
-//             }
-//         }
-//         );
-//     }
-// }
-//
-// class ImageFrame extends JFrame{
-//
-//     public ImageFrame(){
-//         setTitle("ImageTest");
-//         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-//
-//         ImageComponent component = new ImageComponent();
-//         add(component);
-//
-//     }
-//
-//     public static final int DEFAULT_WIDTH = 300;
-//     public static final int DEFAULT_HEIGHT = 200;
-// }
-//
-//
-// class ImageComponent extends JComponent{
-//     /**
-//      *
-//      */
-//     private static final long serialVersionUID = 1L;
-//     private Image image;
-//     public ImageComponent(){
-//         try{
-//             File image2 = new File("bishnu.jpg");
-//             image = ImageIO.read(image2);
-//
-//         }
-//         catch (IOException e){
-//             e.printStackTrace();
-//         }
-//     }
-//     public void paintComponent (Graphics g){
-//         if(image == null) return;
-//         int imageWidth = image.getWidth(this);
-//         int imageHeight = image.getHeight(this);
-//
-//         g.drawImage(image, 50, 50, this);
-//
-//         for (int i = 0; i*imageWidth <= getWidth(); i++)
-//             for(int j = 0; j*imageHeight <= getHeight();j++)
-//                 if(i+j>0) g.copyArea(0, 0, imageWidth, imageHeight, i*imageWidth, j*imageHeight);
-//     }
-//
-// }
